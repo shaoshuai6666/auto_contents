@@ -10,7 +10,7 @@ from auto_abstract import translate_abstract
 fig_table = False
 
 # 输入Word文档
-doc = docx.Document(r"")
+doc = docx.Document(r"/path/to/your/thesis.docx")
 
 #翻译摘要
 print("开始翻译摘要")

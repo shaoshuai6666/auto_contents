@@ -39,6 +39,12 @@ def translate_contents(doc):
         elif found_mulu and para.style.name.startswith("toc"):
             print(para.text)
             result = translate_paragraph(para)
+
+            #把页码前面的空格替换为tab
+            last_space_index = result.rfind(' ')# 查找最右边的空格
+            if last_space_index >= 0:
+                result = result[:last_space_index] + '\t' + result[last_space_index+1:]# 将最右边的空格替换为tab制表符
+                
             print(result)
             Contents_style = doc.styles[para.style.name]
             paragraphs[contents_index+1].insert_paragraph_before(result, Contents_style)
