@@ -1,4 +1,4 @@
-# auto_contents
+# auto_contents 自动生成英文目录
 Auto_Contents是一个Python脚本，它基于学位论文的中文目录自动生成**英文目录**。该脚本还包括自动生成**英文摘要**和**英文图表标题**的功能。
 
 ## 用法：
