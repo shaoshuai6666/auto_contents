@@ -53,6 +53,12 @@ def translate_contents(doc):
             
             found_mulu = False
             break
+        
+    ###一般在中文目录中既有"摘要"又有"Abstract"，而英文目录中只需要一个"Abstract"，所以把重复翻译的摘要目录删掉
+    paragraphs = doc.paragraphs  # 重新获取所有段落
+    if "Abstract" in paragraphs[contents_index+1].text and "Abstract" in paragraphs[contents_index+2].text:# 如果Contents中第一行和第二行同时存在“Abstract”
+        delete_paragraph(paragraphs[contents_index+1])#则删除第一行由"摘要"翻译的"Abstract"
+
     ###添加制表符
     paragraphs = doc.paragraphs  # 重新获取所有段落
     for i, para in enumerate(paragraphs):
