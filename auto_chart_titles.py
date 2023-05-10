@@ -5,7 +5,7 @@ from docx import Document
 from docx.text.paragraph import Paragraph
 from docx.oxml.xmlchemy import OxmlElement
 from utils import insert_paragraph_after
-from translation_deepl import translate_paragraph
+from translation import translate_paragraph
 
 
 
@@ -19,7 +19,7 @@ def remove_existing_fig_table_title(doc):
             p.getparent().remove(p)
             p._p = p._element = None
 
-def translate_fig_table_title(doc):
+def translate_fig_table_title(doc,translation_service):
     remove_existing_fig_table_title(doc)
     # 获取所有段落
     paragraphs = doc.paragraphs
@@ -33,7 +33,8 @@ def translate_fig_table_title(doc):
         if (para.text.startswith("图") or para.text.startswith("表")) and not para.text[-1].isdigit():
             # 段落不以“。”或“.”或“页码”结尾
             if not para.text.endswith("。") and not para.text.endswith(".") :
-                result = translate_paragraph(para)
+                print(para.text)
+                result = translate_paragraph(para,translation_service)
                 # 把“Figure 1”替换为“Fig.1”
                 if re.match(r'^Figure\s*\d+', result):
                         result = re.sub(r'^Figure\s*', 'Fig.', result)

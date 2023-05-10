@@ -1,4 +1,4 @@
-from translation_deepl import translate_paragraph
+from translation import translate_paragraph
 from utils import insert_paragraph_after, delete_paragraph
 from docx.enum.text import WD_TAB_ALIGNMENT, WD_TAB_LEADER
 from docx.shared import Cm
@@ -20,7 +20,7 @@ def delete_abstract(paragraphs):
             
     return abstract_index  
 
-def translate_abstract(doc):
+def translate_abstract(doc,translation_service):
     abstract_index = delete_abstract(doc.paragraphs)
 
     paragraphs = doc.paragraphs  # 获取所有段落
@@ -32,7 +32,7 @@ def translate_abstract(doc):
         # 找到摘要
         if para.text.find("摘　　要") != -1:
             found_zhaiyao = True
-            print("found_zhaiyao = ",found_zhaiyao)
+            # print("found_zhaiyao = ",found_zhaiyao)
             continue
         # 判断段落样式
         elif found_zhaiyao  and re.match(r'^图\s*\d+\s*表\s*\d+\s*参\s*\d+$',para.text.strip()):
@@ -41,7 +41,7 @@ def translate_abstract(doc):
         elif found_zhaiyao :
             # print(para.style)
             print(para.text)
-            result = translate_paragraph(para)
+            result = translate_paragraph(para,translation_service)
             print(result)
             Contents_style = doc.styles["Normal"]
             paragraphs[abstract_index+1].insert_paragraph_before(result, Contents_style)
